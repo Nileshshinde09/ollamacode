@@ -1,0 +1,63 @@
+# ============================================================
+# release-please.yml — Automated version bumping & changelog
+#
+# OPTIONAL but highly recommended workflow.
+#
+# How it works:
+#   1. You write commits using Conventional Commit format:
+#      feat: add Python SDK support
+#      fix: resolve CUDA memory error on GTX 1650
+#      feat!: rename runTask to run (breaking change)
+#
+#   2. Release Please opens a "Release PR" automatically,
+#      bumping the version in package.json and updating
+#      CHANGELOG.md based on your commit messages.
+#
+#   3. When you merge the Release PR, it pushes a git tag
+#      (e.g. v1.1.0), which triggers publish.yml to npm.
+#
+# Conventional Commit types:
+#   feat:     → minor version bump  (1.0.0 → 1.1.0)
+#   fix:      → patch version bump  (1.0.0 → 1.0.1)
+#   feat!:    → major version bump  (1.0.0 → 2.0.0)
+#   fix!:     → major version bump
+#   chore:    → no version bump
+#   docs:     → no version bump
+#   refactor: → no version bump
+#
+# Setup:
+#   No extra secrets needed — uses GITHUB_TOKEN automatically.
+# ============================================================
+
+name: Release Please
+
+on:
+  push:
+    branches: [main, master]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    name: Release Please
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          release-type: node
+          package-name: ollamacode
+          # Generates CHANGELOG.md automatically from commit messages
+          changelog-types: |
+            [
+              {"type": "feat",     "section": "✨ Features"},
+              {"type": "fix",      "section": "🐛 Bug Fixes"},
+              {"type": "perf",     "section": "⚡ Performance"},
+              {"type": "refactor", "section": "♻️ Refactoring"},
+              {"type": "docs",     "section": "📚 Documentation"},
+              {"type": "chore",    "section": "🔧 Maintenance"},
+              {"type": "ci",       "section": "👷 CI/CD"}
+            ]

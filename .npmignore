@@ -1,0 +1,18 @@
+# Source (compiled to dist/ instead)
+src/
+
+# Dev/config files
+.github/
+tsconfig.json
+install.sh
+install.bat
+*.log
+
+# Test files (when added)
+**/*.test.ts
+**/*.spec.ts
+__tests__/
+
+# Local config
+.env
+.env.*
