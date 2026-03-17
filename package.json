@@ -1,6 +1,6 @@
 {
   "name": "ollamacode",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Claude Code CLI clone powered by Ollama local models",
   "main": "dist/index.js",
   "bin": {
